@@ -1,0 +1,63 @@
+﻿@model ECommWeb.Models.Product
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<head>
+
+
+
+
+
+
+</head>
+<body style="background-color:#adb5bd;">
+
+    <h5>
+        <marquee direction="right" behavior="alternate" scrollamount="5"> Limited Time Offer 10% OFF </marquee>
+
+    </h5>
+    @* <div>
+    <form asp-action="Search">
+    <div asp-validation-summary="ModelOnly">
+    <div class="form-group">
+    <label asp-for="Name" class="control-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+    <input type="submit" value="Create" class="btn btn-dark" />
+
+    </div>
+    </div>
+    </form>
+    </div>*@
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="1600">
+                <img src="/Img/1.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item" data-bs-interval="1600">
+                <img src="/Img/hii.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item" data-bs-interval="1600">
+                <img src="/Img/new.jpg  " class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div>
+
+
+</body>

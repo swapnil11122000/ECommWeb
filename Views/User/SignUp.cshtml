@@ -1,0 +1,55 @@
+﻿@model ECommWeb.Models.Users
+
+@{
+    ViewData["Title"] = "SignUp";
+}
+<br />
+
+<body style=" padding-bottom: 40px; background-color: #adb5bd;">
+    <div class="container">
+        <form asp-action="SignUp" class="form-signup" style="max-width: 330px; padding: 15px; margin: 0 auto; background-color: #fff; border: 1px solid #e5e5e5; border-radius: 5px;">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <h3 class="form-signup-heading" style="margin-bottom: 10px;">Create Account</h3>
+            <label asp-for="UserName"  class="sr-only">UserName</label>
+            <input asp-for="UserName" type="text"  class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="UserName" required autofocus>
+            <span asp-validation-for="UserName" class="text-danger"></span>
+
+            
+            <label asp-for="Password"  class="sr-only">Password</label>
+            <input asp-for="Password" type="password"  class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="Password" required>
+            <span asp-validation-for="Password" class="text-danger"></span>
+
+            
+            <label asp-for="Email"  class="sr-only">Email address</label>
+            <input asp-for="Email" type="email"  class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="Email address" required>
+            <span asp-validation-for="Email" class="text-danger"></span>
+
+            
+            <label asp-for="Mobile" class="sr-only">Mobile</label>
+            <input asp-for="Mobile" type="number"  class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="Mobile" required>
+            <span asp-validation-for="Mobile" class="text-danger"></span>
+
+            
+            <label asp-for="Gender" class="sr-only">Gender</label>
+            <input asp-for="Gender" type="text" id="inputConfirmPassword" class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="Gender" required>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+
+            <br />
+            <button class="btn btn-lg btn-dark btn-block" type="submit" onclick="register()">Create Account</button>
+         
+            
+
+            <script type="text/javascript">
+                function register() {
+                    alert('Registered successfully!');
+                }
+            </script>
+
+        </form>
+    </div> <!-- /container -->
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+</body>

@@ -1,0 +1,41 @@
+﻿@model ECommWeb.Models.Users
+@{
+    ViewData["Title"] = "Login";
+}
+<body style="background-color:#adb5bd;">
+<br /><br />
+    <div style=" padding-bottom: 40px; background-color: #adb5bd;">
+    <div class="container">
+        <form asp-action="Login" class="form-signin" style="max-width: 330px; padding: 15px; margin: 0 auto; background-color: #fff; border: 1px solid #e5e5e5; border-radius: 5px;">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <h3 class="form-signin-heading" style="margin-bottom: 10px;">Please sign in</h3>
+           
+            <label asp-for="UserName" class="sr-only"> UserName</label>
+            <input asp-for="UserName" type="text" id="inputEmail" class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="UserName" required autofocus>
+             <span asp-validation-for="UserName" class="text-danger"></span>
+
+            <label asp-for="Password" for="inputPassword" class="sr-only">Password</label>       
+            <input asp-for="Password" type="password" id="inputPassword" class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="Password" required>
+            <span asp-validation-for="Password" class="text-danger"></span>
+
+
+            <div class="checkbox" style="margin-bottom: 10px;">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button class="btn btn-lg btn-dark btn-block" type="submit" onclick="sign()">Sign in</button>
+                <script type="text/javascript">
+                    function sign() {
+                        alert('Signed In successfully!');
+                    }
+                </script>
+
+        </form>
+    </div> <!-- /container -->
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</div>
+</body>
