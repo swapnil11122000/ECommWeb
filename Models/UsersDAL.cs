@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 
 using ECommWeb.Models;
+using DevExpress.XtraExport;
 
 namespace ECommWeb.Models
 {
@@ -44,6 +45,65 @@ namespace ECommWeb.Models
             }
             con.Close();
             return list;
+        }
+
+        public bool IsUserExists(Users user)
+        {
+            bool exists = false;
+           
+            string qry = "SELECT COUNT(*) FROM users WHERE username = @UserName";
+
+            using (SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("SqlConnection")))
+            {
+                using (SqlCommand cmd = new SqlCommand(qry, con))
+                {
+                    cmd.Parameters.AddWithValue("@UserName", user.UserName);
+                    try
+                    {
+                        con.Open();
+                        int count = (int)cmd.ExecuteScalar();
+
+                        if (count > 0)
+                        {
+                            exists = true;
+                        }
+                    }
+                    catch (Exception ex)
+                    {                      
+                        Console.WriteLine("Error in IsUserExists: " + ex.Message);
+                    }
+                }
+            }
+
+            return exists;
+        }
+
+        public bool ValidateCredentials(Users user)
+        {
+            bool Validate = false;
+
+
+            string qry = "select * from users where username=@UserName and Password=@Password";
+            cmd = new SqlCommand(qry, con);
+            cmd.Parameters.AddWithValue("@UserName", user.UserName);
+            cmd.Parameters.AddWithValue("@Password", user.Password);
+            con.Open();
+            int count = (int)cmd.ExecuteScalar();
+
+            if (count > 0)
+            {
+                Validate = true;
+            }
+            con.Close();
+            return Validate;
+        }
+        public int Validate()
+        {
+            int IsPresent = 0;
+
+
+
+            return IsPresent;
         }
         // add record
         public int AddUser(Users user)

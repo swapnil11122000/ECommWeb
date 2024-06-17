@@ -25,15 +25,35 @@ namespace webapp3.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
 
         public ActionResult Login(Users user)
         {
-            return RedirectToAction("Index", "Product");
+            bool Exists = db.IsUserExists(user);
+            if (Exists)
+            {
+                bool SignedInSuccessfully = db.ValidateCredentials(user);
+                if (SignedInSuccessfully)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Error = "Invalid credentials";
+                    return View();
+                }
+            }
+            else
+            {
+
+                ViewBag.Error = "User does not exist";
+                return View();
+            }
         }
-       
-        
+
+
         public ActionResult SignUp()
         {
             return View();
@@ -45,41 +65,20 @@ namespace webapp3.Controllers
         public ActionResult SignUp(Users user)
         {
             int res = db.AddUser(user);
-           
-            return RedirectToAction("Login", "User"); 
-            
 
-            /*  try
-            {
-                int res = db.AddUser(user);
-                *//*if (res > 0)
-                {
-                    return RedirectToAction(nameof(ProductController.Index));
-
-                }
-                else
-                {
-
-                    ViewBag.Error = "Something Went Wrong";
-                    return View();
-                }*//*
-            }
-            catch
-            {
-                return View();
-            }*/
+            return RedirectToAction("Login", "User");
         }
 
-       
+
         public JsonResult GetDevInfo()
         {
             Dev dev = new Dev();
-            var json=JsonConvert.SerializeObject(dev);
+            var json = JsonConvert.SerializeObject(dev);
             return Json(json);
         }
-       
 
-            
-        
+
+
+
     }
 }
