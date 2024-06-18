@@ -11,9 +11,9 @@
 
             <h3 class="form-signin-heading" style="margin-bottom: 10px;">Please sign in</h3>
            
-            <label asp-for="UserName" class="sr-only"> UserName</label>
-            <input asp-for="UserName" type="text" id="inputEmail" class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="UserName" required autofocus>
-             <span asp-validation-for="UserName" class="text-danger"></span>
+            <label asp-for="Email" class="sr-only"> Email</label>
+            <input asp-for="Email" type="text" id="inputEmail" class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="UserName" required autofocus>
+             <span asp-validation-for="Email" class="text-danger"></span>
 
             <label asp-for="Password" for="inputPassword" class="sr-only">Password</label>       
             <input asp-for="Password" type="password" id="inputPassword" class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="Password" required>
@@ -22,7 +22,7 @@
 
             <div class="checkbox" style="margin-bottom: 10px;">
                 <label>
-                    <input type="checkbox" value="remember-me"> Remember me
+                        <input type="checkbox" asp-for="KeepLoggedIn"> Keep me logged In.
                 </label>
             </div>
             <button class="btn btn-lg btn-dark btn-block" type="submit">Sign in</button>
@@ -31,7 +31,13 @@
                         alert('Signed In successfully!');
                     }
                 </script>  *@
-               
+                @if (ViewData["ValidateMessage"] != null)
+                {
+                    <br/>
+                    <br/>
+                    <label>@ViewData["ValidateMessage"]</label>
+                }
+
         </form>
     </div> <!-- /container -->
     <!-- Bootstrap JS -->

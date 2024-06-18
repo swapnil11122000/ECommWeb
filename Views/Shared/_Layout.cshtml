@@ -22,8 +22,11 @@
                     </ul>
                     <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">All Products</a>
                     <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Supplier">Become Supplier</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">My Cart</a>
                     <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
                     <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="SignUp">Sign Up</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Log Out</a>
+                    
                 </div>
             </div>
         </nav>
@@ -81,7 +84,7 @@
         $(document).ready(function () {
             $("#btnDev").click(function () {
                 $.ajax({
-                    url: "User/GetDevInfo",
+                    url: "http://localhost:51430/User/GetDevInfo",
                     method: "GET",
                     success:function(data){
                         data = JSON.parse(data);
@@ -98,12 +101,9 @@
                     },
                     error: function (err) {
                         console.error(err);
-                        alert("Please Refresh!");
+                        alert("Please Login!");
                     }
-
-                })
-
-               
+                })            
             });
             $("#btn1Close").click(function () {
                 $('#myModal').modal('hide');

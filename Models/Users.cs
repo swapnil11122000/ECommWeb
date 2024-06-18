@@ -18,5 +18,9 @@ namespace ECommWeb.Models
         public int Mobile { get; set; }
         [Required]
         public string Gender { get; set; }
+
+        public string LoggedIn { get; set; }
+
+        public bool KeepLoggedIn { get; set; }
     }
 }

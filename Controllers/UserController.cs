@@ -1,8 +1,12 @@
 ﻿using ECommWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
-namespace webapp3.Controllers
+namespace ECommWeb.Controllers
 
 {
     public class UserController : Controller
@@ -21,37 +25,74 @@ namespace webapp3.Controllers
             List<Users> model = db.GetAllUsers();
             return View(model);
         }
-        public ActionResult Login()
+        public IActionResult Login()
         {
+            ClaimsPrincipal claimsUser = HttpContext.User;
+            if (claimsUser.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index","Home");
+            }
             return View();
         }
 
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-
-        public ActionResult Login(Users user)
+        public async Task<IActionResult> Login(Users user)
         {
-            bool Exists = db.IsUserExists(user);
-            if (Exists)
-            {
-                bool SignedInSuccessfully = db.ValidateCredentials(user);
-                if (SignedInSuccessfully)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    ViewBag.Error = "Invalid credentials";
-                    return View();
-                }
-            }
-            else
-            {
 
-                ViewBag.Error = "User does not exist";
-                return View();
+            if (user.Email == "test@gmail.com" &&
+                  user.Password == "test123")
+            {
+                List<Claim> claims = new List<Claim>() {
+                     new Claim(ClaimTypes.NameIdentifier,user.Email),
+                     new Claim("OtherProperties","Example Role")
+
+                };
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,
+                    CookieAuthenticationDefaults.AuthenticationScheme);
+
+                AuthenticationProperties properties = new AuthenticationProperties()
+                {
+                    AllowRefresh = true,
+                    IsPersistent=user.KeepLoggedIn
+                };
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity), properties);
+                return RedirectToAction("Index","Home");
+
             }
+            ViewData["ValidateMessage"] = "User not found";
+            return View();
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+
+        //public ActionResult Login(Users user)
+        //{
+        //    bool Exists = db.IsUserExists(user);
+        //    if (Exists)
+        //    {
+        //        bool SignedInSuccessfully = db.ValidateCredentials(user);
+        //        if (SignedInSuccessfully)
+        //        {
+
+
+        //            return RedirectToAction("Index","Product");
+        //        }
+        //        else
+        //        {
+        //            ViewBag.Error = "Invalid credentials";
+        //            return View();
+        //        }
+        //    }
+        //    else
+        //    {
+
+        //        ViewBag.Error = "User does not exist";
+        //        return View();
+        //    }
+        //}
 
 
         public ActionResult SignUp()
@@ -69,7 +110,7 @@ namespace webapp3.Controllers
             return RedirectToAction("Login", "User");
         }
 
-
+        [Authorize]
         public JsonResult GetDevInfo()
         {
             Dev dev = new Dev();
@@ -77,7 +118,10 @@ namespace webapp3.Controllers
             return Json(json);
         }
 
-
+        //public ActionResult LogOut()
+        //{
+        //    return Redirect("http://localhost:51430/");
+        //}
 
 
     }

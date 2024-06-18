@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 
 using ECommWeb.Models;
-using DevExpress.XtraExport;
+
 
 namespace ECommWeb.Models
 {
@@ -93,6 +93,7 @@ namespace ECommWeb.Models
             if (count > 0)
             {
                 Validate = true;
+                user.LoggedIn = "True";
             }
             con.Close();
             return Validate;

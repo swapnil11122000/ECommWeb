@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace ECommWeb.Controllers
 
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext applicationDbContext;
