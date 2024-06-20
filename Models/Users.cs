@@ -22,5 +22,7 @@ namespace ECommWeb.Models
         public string LoggedIn { get; set; }
 
         public bool KeepLoggedIn { get; set; }
+
+        public bool IsSupplier { get; set; }
     }
 }

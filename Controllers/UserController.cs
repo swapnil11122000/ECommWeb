@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace ECommWeb.Controllers
 
@@ -39,28 +40,32 @@ namespace ECommWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Users user)
         {
-
-            if (user.Email == "test@gmail.com" &&
-                  user.Password == "test123")
+            bool IsUserExists=db.IsUserExists(user);
+            if (IsUserExists)
             {
-                List<Claim> claims = new List<Claim>() {
-                     new Claim(ClaimTypes.NameIdentifier,user.Email),
-                     new Claim("OtherProperties","Example Role")
-
-                };
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,
-                    CookieAuthenticationDefaults.AuthenticationScheme);
-
-                AuthenticationProperties properties = new AuthenticationProperties()
+                bool CredentialsRight= db.ValidateCredentials(user);
+                if (CredentialsRight)
                 {
-                    AllowRefresh = true,
-                    IsPersistent=user.KeepLoggedIn
-                };
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity), properties);
-                return RedirectToAction("Index","Home");
+                    DataTable dt = db.GetUser(user.Email.ToString());
+                    List<Claim> claims = new List<Claim>() {
+                     new Claim(ClaimTypes.NameIdentifier,user.Email),
+                     new Claim("Name", dt.Rows[0]["UserName"].ToString()),
+                     new Claim("Supplier","Supplier")
 
-            }
+                };
+                    ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,
+                        CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    AuthenticationProperties properties = new AuthenticationProperties()
+                    {
+                        AllowRefresh = true,
+                        IsPersistent = user.KeepLoggedIn
+                    };
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity), properties);
+                    return RedirectToAction("Index", "Home");
+                }
+            }     
             ViewData["ValidateMessage"] = "User not found";
             return View();
         }

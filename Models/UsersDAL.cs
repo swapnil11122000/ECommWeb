@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Configuration;
-
+using System;
 using ECommWeb.Models;
+using System.Data;
+using System.Data.Common;
 
 
 namespace ECommWeb.Models
@@ -46,18 +48,31 @@ namespace ECommWeb.Models
             con.Close();
             return list;
         }
+        public DataTable GetUser(string Email)
+        {
+            DataTable dataTable = new DataTable();
+            string qry = "select * from users where Email=@Email";
+            cmd = new SqlCommand(qry, con);
+            cmd.Parameters.AddWithValue("@Email",Email);         
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            dataTable.Load(reader);
+          
+            con.Close();
 
+            return dataTable;
+        }
         public bool IsUserExists(Users user)
         {
             bool exists = false;
            
-            string qry = "SELECT COUNT(*) FROM users WHERE username = @UserName";
+            string qry = "SELECT COUNT(*) FROM users WHERE Email = @Email";
 
             using (SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("SqlConnection")))
             {
                 using (SqlCommand cmd = new SqlCommand(qry, con))
                 {
-                    cmd.Parameters.AddWithValue("@UserName", user.UserName);
+                    cmd.Parameters.AddWithValue("@Email", user.Email);
                     try
                     {
                         con.Open();
@@ -83,9 +98,9 @@ namespace ECommWeb.Models
             bool Validate = false;
 
 
-            string qry = "select * from users where username=@UserName and Password=@Password";
+            string qry = "select * from users where Email=@Email and Password=@Password";
             cmd = new SqlCommand(qry, con);
-            cmd.Parameters.AddWithValue("@UserName", user.UserName);
+            cmd.Parameters.AddWithValue("@Email", user.Email);
             cmd.Parameters.AddWithValue("@Password", user.Password);
             con.Open();
             int count = (int)cmd.ExecuteScalar();

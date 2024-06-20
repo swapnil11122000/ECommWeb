@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using ECommWeb.Models;
+@using Microsoft.AspNetCore.Mvc;
+@using Newtonsoft.Json;
+@using System.Security.Claims;
+@using Microsoft.AspNetCore.Authentication;
+@using Microsoft.AspNetCore.Authentication.Cookies;
+@using Microsoft.AspNetCore.Authorization;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,6 +21,10 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
             <div class="container-fluid">
                 <b><a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ShopEase</a></b>
+                @if (Context.User.Identity.IsAuthenticated)
+                {
+                    <b>Hello.. @User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value</b>
+                }
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -20,11 +32,21 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                      
                     </ul>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">All Products</a>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Supplier">Become Supplier</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index"> Products</a>
+                    @if (User.Claims.Any(c => c.Type == "Supplier"))
+                    {
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Supplier">Become Supplier</a>
+                    }
+                    @if (!Context.User.Identity.IsAuthenticated)
+                    {
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Supplier">Become Supplier</a>
+                    }
                     <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">My Cart</a>
+                    @if(!Context.User.Identity.IsAuthenticated){
                     <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="SignUp">Sign Up</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="SignUp">Sign Up</a>
+                    }
+                 
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Log Out</a>
                     
                 </div>
