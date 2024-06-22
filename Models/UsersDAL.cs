@@ -1,10 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using System;
-using ECommWeb.Models;
-using System.Data;
-using System.Data.Common;
 
 
 namespace ECommWeb.Models
@@ -97,21 +92,34 @@ namespace ECommWeb.Models
         {
             bool Validate = false;
 
-
             string qry = "select * from users where Email=@Email and Password=@Password";
-            cmd = new SqlCommand(qry, con);
-            cmd.Parameters.AddWithValue("@Email", user.Email);
-            cmd.Parameters.AddWithValue("@Password", user.Password);
-            con.Open();
-            int count = (int)cmd.ExecuteScalar();
 
-            if (count > 0)
+            using (SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("SqlConnection")))
             {
-                Validate = true;
-                user.LoggedIn = "True";
+                using (SqlCommand cmd = new SqlCommand(qry, con))
+                {
+                    cmd.Parameters.AddWithValue("@Email", user.Email);
+                    cmd.Parameters.AddWithValue("@Password", user.Password);
+                    try
+                    {
+                        con.Open();
+                        int count = (int)cmd.ExecuteScalar();
+
+                        if (count > 0)
+                        {
+                            Validate = true;
+                            user.LoggedIn = "True";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error in IsUserExists: " + ex.Message);
+                    }
+                }
             }
             con.Close();
             return Validate;
+
         }
         public int Validate()
         {

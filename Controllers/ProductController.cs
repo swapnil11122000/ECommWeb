@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ECommWeb.Entities;
 using Microsoft.AspNetCore.Authorization;
+using System.Configuration;
 
 namespace ECommWeb.Controllers
 
@@ -10,8 +11,10 @@ namespace ECommWeb.Controllers
     [Authorize]
     public class ProductController : Controller
     {
+        private readonly IConfiguration configuration;
         private readonly ApplicationDbContext applicationDbContext;
          ProductDAL db;
+       
         public ProductController(ApplicationDbContext applicationDbContext)
         {
             this.applicationDbContext = applicationDbContext;
@@ -55,9 +58,22 @@ namespace ECommWeb.Controllers
             return View(model);
         }
 
+        public ActionResult AddtoCart(int Id)
+        {
+
+           
+            int userid = (int)HttpContext.Session.GetInt32("UserId");
+            Cart cart=new Cart();
+            cart.UserID= userid;
+            cart.ProductID = Id;
+             db.InsertItemToCart(cart);
+            return RedirectToAction("CartIndex", "Cart");
+
+        }
+
         // GET: ProductController/Create
         //add new product
-     
+
         public ActionResult Create()
         {
             return View();

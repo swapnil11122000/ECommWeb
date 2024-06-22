@@ -63,7 +63,8 @@
                     @* @Html.ActionLink("Delete", "Delete", new { id=item.Id }) |
                     <a asp-action="Create">Add Product</a>*@
                        @*  <button type="submit" class="btn btn-dark" onclick="Add">Buy</button> *@
-                        <button type="submit" class="btn btn-dark" onclick="cart">Add to Cart</button>
+                        @Html.ActionLink("Add to Cart", "AddtoCart", new { id = item.Id }, new { @class = "btn btn-dark" })
+                      @*   <button type="submit" class="btn btn-dark" onclick="cart">Add to Cart</button> *@
 
 
 

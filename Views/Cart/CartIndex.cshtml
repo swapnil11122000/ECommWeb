@@ -1,0 +1,38 @@
+﻿@model System.Data.DataTable
+@{
+    ViewData["Title"] = "CartIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<body style="background-color:#adb5bd;">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Company</th>
+                <th>Country</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow row in Model.Rows)
+            {
+                @if (row != null)
+                {
+                    <tr>
+                        <td>@row["Name"]</td>
+                        <td>@row["Category"]</td>
+                        <td>@row["Price"]</td>
+                        <td>@row["Company"]</td>
+                        <td>@row["Country"]</td>
+
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</body>

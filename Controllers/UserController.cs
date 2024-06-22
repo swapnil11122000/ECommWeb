@@ -47,6 +47,10 @@ namespace ECommWeb.Controllers
                 if (CredentialsRight)
                 {
                     DataTable dt = db.GetUser(user.Email.ToString());
+
+                    int userId = Convert.ToInt32(dt.Rows[0]["Id"]);
+                   
+                    HttpContext.Session.SetInt32("UserId", userId);
                     List<Claim> claims = new List<Claim>() {
                      new Claim(ClaimTypes.NameIdentifier,user.Email),
                      new Claim("Name", dt.Rows[0]["UserName"].ToString()),

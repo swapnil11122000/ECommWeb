@@ -1,8 +1,6 @@
-﻿
-
-
-using ECommWeb.Entities;
-    
+﻿using ECommWeb.Entities;
+using System.Data;
+using System.Data.SqlClient;using System.Data.SqlClient;
 
 
 namespace ECommWeb.Models
@@ -72,6 +70,15 @@ namespace ECommWeb.Models
                 res = db.SaveChanges();
             }
             return res;
+        }
+
+        public void InsertItemToCart(Cart cart)
+        {
+
+            db.Carts.Add(cart);
+
+            db.SaveChanges();
+
         }
     }
 }
