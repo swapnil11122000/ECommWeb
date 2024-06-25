@@ -15,15 +15,14 @@
             <input asp-for="UserName" type="text"  class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="UserName" required autofocus>
             <span asp-validation-for="UserName" class="text-danger"></span>
 
-            
+            <label asp-for="Email" class="sr-only">Email address</label>
+            <input asp-for="Email" type="email" class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="Email address" required>
+            <span asp-validation-for="Email" class="text-danger"></span>
+
             <label asp-for="Password"  class="sr-only">Password</label>
             <input asp-for="Password" type="password"  class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="Password" required>
             <span asp-validation-for="Password" class="text-danger"></span>
 
-            
-            <label asp-for="Email"  class="sr-only">Email address</label>
-            <input asp-for="Email" type="email"  class="form-control" style="position: relative; font-size: 16px; height: auto; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" placeholder="Email address" required>
-            <span asp-validation-for="Email" class="text-danger"></span>
 
             
             <label asp-for="Mobile" class="sr-only">Mobile</label>
@@ -36,15 +35,15 @@
             <span asp-validation-for="Gender" class="text-danger"></span>
 
             <br />
-            <button class="btn btn-lg btn-dark btn-block" type="submit" onclick="register()">Create Account</button>
+            <button class="btn btn-lg btn-dark btn-block" type="submit" >Create Account</button>
          
-            
+           @*  onclick="register()" *@
 
-            <script type="text/javascript">
+           @*  <script type="text/javascript">
                 function register() {
                     alert('Registered successfully!');
                 }
-            </script>
+            </script> *@
 
         </form>
     </div> <!-- /container -->

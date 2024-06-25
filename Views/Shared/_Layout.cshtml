@@ -46,9 +46,10 @@
                     <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
                         <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="SignUp">Sign Up</a>
                     }
-                 
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Log Out</a>
-                    
+                   @if (Context.User.Identity.IsAuthenticated)
+                    {
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Log Out</a>
+                    }
                 </div>
             </div>
         </nav>

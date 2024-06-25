@@ -1,9 +1,11 @@
 ﻿using ECommWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
 namespace ECommWeb.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly IConfiguration configuration;
